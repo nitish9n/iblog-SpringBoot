@@ -1,0 +1,58 @@
+/* About Page Specific Styles */
+.about-container {
+    padding: 20px;
+}
+
+.about-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(248, 239, 239, 0.5); /* Matches the featured articles background */
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.about-left {
+    flex: 1;
+    padding-right: 40px;
+}
+
+.about-left h2 {
+    font-size: 38px;
+    margin-bottom: 20px;
+    color: var(--main-bg-color); /* Uses your brand orange/brown */
+}
+
+.about-left p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    font-family: var(--font2); /* Roboto for readable body text */
+}
+
+.about-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.about-right img {
+    max-width: 100%;
+    border-radius: 8px;
+    border: 2px solid var(--main-bg-color);
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 1200px) {
+    .about-content {
+        flex-direction: column;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .about-left {
+        padding-right: 0;
+        margin-bottom: 30px;
+    }
+}
