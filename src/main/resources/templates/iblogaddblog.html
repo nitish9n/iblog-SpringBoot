@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/utils.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/mobile.css}">
+
+    <title>Add Blog - iBlog</title>
+</head>
+
+<body>
+
+    <!-- ================= NAVIGATION ================= -->
+
+    <nav class="navigation max-width-1 m-auto">
+
+        <div class="nav-left">
+
+            <a th:href="@{/}">
+                <span>
+                    <img
+                        th:src="@{/logo.png}"
+                        width="94px"
+                        alt="iBlog">
+                </span>
+            </a>
+
+            <ul>
+
+                <li>
+                    <a th:href="@{/}">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/about}">
+                        About
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/contact}">
+                        Contact
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/addBlog}">
+                        Add Blog
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="nav-search">
+
+            <form
+                th:action="@{/search}"
+                method="get">
+
+                <input
+                    class="form-input"
+                    type="text"
+                    name="query"
+                    placeholder="Article Search">
+
+                <button
+                    class="btn"
+                    type="submit">
+
+                    Search
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <div class="nav-login">
+
+            <a
+                th:href="@{/login}"
+                class="login-link">
+
+                Sign In
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <div class="max-width-1 m-auto">
+
+        <hr>
+
+    </div>
+
+
+    <!-- ================= ADD BLOG ================= -->
+
+    <div class="contact-content max-width-1 m-auto my-2">
+
+        <h1>
+            Write Your Blog
+        </h1>
+
+
+        <form
+            th:action="@{/processBlog}"
+            method="post"
+            enctype="multipart/form-data">
+
+
+            <!-- TITLE -->
+
+            <div class="form-box">
+
+                <label for="title">
+                    Blog Title
+                </label>
+
+                <input
+                    class="form-input"
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="Enter blog title"
+                    required>
+
+            </div>
+
+
+            <!-- CONTENT -->
+
+            <div class="form-box">
+
+                <label for="content">
+                    Blog Content
+                </label>
+
+                <textarea
+                    class="form-input"
+                    id="content"
+                    name="content"
+                    rows="12"
+                    placeholder="Write your blog here..."
+                    required></textarea>
+
+            </div>
+
+
+            <!-- IMAGE -->
+
+            <div class="form-box">
+
+                <label for="image">
+                    Blog Image
+                </label>
+
+                <input
+                    class="form-input"
+                    type="file"
+                    id="image"
+                    name="image"
+                    accept="image/*">
+
+                <small>
+                    Image is optional.
+                </small>
+
+            </div>
+
+
+            <!-- SUBMIT -->
+
+            <div class="form-box">
+
+                <button
+                    class="btn"
+                    type="submit">
+
+                    Publish Blog
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="footer">
+
+        <p>
+            Copyright &copy; iBlog.com
+        </p>
+
+    </div>
+
+</body>
+
+</html>

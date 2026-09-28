@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+        th:href="@{/css/utils.css}">
+
+    <link rel="stylesheet"
+        th:href="@{/css/style.css}">
+
+    <link rel="stylesheet"
+        th:href="@{/css/mobile.css}">
+
+    <title>iBlog - Heaven for bloggers</title>
+
+
+    <style>
+
+        /* =========================================
+           BLOG GRID
+           ========================================= */
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+
+        .blog-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .blog-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+
+        .blog-card-content {
+            padding: 20px;
+        }
+
+
+        .blog-card-content h3 {
+            margin-bottom: 10px;
+        }
+
+
+        .blog-card-content h3 a {
+            text-decoration: none;
+        }
+
+
+        .blog-author {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+
+        .blog-date {
+            font-size: 13px;
+            color: #777;
+        }
+
+
+        .blog-preview {
+            margin-top: 12px;
+            line-height: 1.5;
+
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+
+            overflow: hidden;
+        }
+
+
+        /* =========================================
+           READ MORE
+           ========================================= */
+
+        .read-more {
+            display: inline-block;
+            margin-top: 12px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+
+        /* =========================================
+           OWNER BUTTONS
+           ========================================= */
+
+        .blog-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 8px;
+        }
+
+
+        .update-btn,
+        .delete-btn {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+
+        .update-btn {
+            background: #457b9d;
+        }
+
+
+        .update-btn:hover {
+            background: #35657f;
+        }
+
+
+        .delete-btn {
+            background: #dc3545;
+        }
+
+
+        .delete-btn:hover {
+            background: #b02a37;
+        }
+
+
+        /* =========================================
+           USER NAVIGATION
+           ========================================= */
+
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+
+        .user-nav a {
+            text-decoration: none;
+        }
+
+
+        .welcome-user {
+            font-size: 14px;
+        }
+
+
+        .logout-link {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+
+        .messages-link {
+            font-weight: bold;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+           ========================================= */
+
+        @media screen and (max-width: 900px) {
+
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media screen and (max-width: 600px) {
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="navigation max-width-1 m-auto">
+
+        <div class="nav-left">
+
+            <a th:href="@{/}">
+
+                <span>
+
+                    <img
+                        th:src="@{/img/logo.png}"
+                        width="94px"
+                        alt="iBlog">
+
+                </span>
+
+            </a>
+
+
+            <ul>
+
+                <li>
+                    <a th:href="@{/}">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/about}">
+                        About
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/contact}">
+                        Contact
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/addBlog}">
+                        Add Blog
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="nav-search">
+
+            <form
+                th:action="@{/search}"
+                method="get">
+
+                <input
+                    class="form-input"
+                    type="text"
+                    name="query"
+                    placeholder="Article Search"
+                    required>
+
+                <button
+                    class="btn"
+                    type="submit">
+
+                    Search
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- LOGIN / USER -->
+
+        <div class="nav-login">
+
+            <div th:if="${session.loggedInUser != null}" class="user-nav">
+
+                <span class="welcome-user">
+
+                    Hi,
+                    <span th:text="${session.loggedInUser.username}"></span>
+
+                </span>
+
+
+                <a
+                    th:href="@{/myMessages}"
+                    class="messages-link">
+
+                    My Messages
+
+                </a>
+
+
+                <a
+                    th:href="@{/logout}"
+                    class="logout-link">
+
+                    Logout
+
+                </a>
+
+            </div>
+
+
+            <a
+                th:unless="${session.loggedInUser != null}"
+                th:href="@{/login}"
+                class="login-link">
+
+                Sign In
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <div class="max-width-1 m-auto">
+
+        <hr>
+
+    </div>
+
+
+    <!-- HOME CONTENT -->
+
+    <div class="m-auto content max-width-1 my-2">
+
+        <div class="content-left">
+
+            <h1>
+                The heaven for bloggers
+            </h1>
+
+
+            <p>
+
+                iBlog is a website which lets you
+                submit an article and share your
+                thoughts with other readers.
+
+            </p>
+
+
+            <p>
+
+                Read interesting articles, share your
+                knowledge and discover new ideas
+                from other bloggers.
+
+            </p>
+
+        </div>
+
+
+        <div class="content-right">
+
+            <img
+                th:src="@{/img/home.svg}"
+                alt="iBlog">
+
+        </div>
+
+    </div>
+
+
+    <div class="max-width-1 m-auto">
+
+        <hr>
+
+    </div>
+
+
+    <!-- BLOGS -->
+
+    <div class="home-articles max-width-1 m-auto font2">
+
+        <h2>
+            Featured Articles
+        </h2>
+
+
+        <p th:if="${#lists.isEmpty(posts)}">
+            No blogs available yet.
+        </p>
+
+
+        <div class="blog-grid">
+
+            <div th:each="post : ${posts}" class="blog-card">
+
+
+                    <!-- IMAGE -->
+
+                    <img
+                        th:if="${post.imageName != null and !#strings.isEmpty(post.imageName)}"
+                        class="blog-card-image"
+                        th:src="@{/img/blogs/{image}(image=${post.imageName})}"
+                        th:alt="${post.title}">
+
+                    <img
+                        th:unless="${post.imageName != null and !#strings.isEmpty(post.imageName)}"
+                        class="blog-card-image"
+                        th:src="@{/img/3.png}"
+                        alt="iBlog">
+
+
+                    <!-- CONTENT -->
+
+                    <div class="blog-card-content">
+
+
+                        <h3>
+
+                            <a
+                                th:href="@{/blogpost/{id}(id=${post.id})}"
+                                th:text="${post.title}">
+                            </a>
+
+                        </h3>
+
+
+                        <div class="blog-author">
+
+                            By <span th:text="${post.author}"></span>
+
+                        </div>
+
+
+                        <div class="blog-date">
+
+                            <span th:text="${post.createdAt}"></span>
+
+                        </div>
+
+
+                        <div class="blog-preview">
+
+                            <span th:text="${post.content}"></span>
+
+                        </div>
+
+
+                        <a
+                            class="read-more"
+                            th:href="@{/blogpost/{id}(id=${post.id})}">
+
+                            Read Full Blog →
+
+                        </a>
+
+
+                        <div
+                            th:if="${session.loggedInUser != null and session.loggedInUser.username == post.author}"
+                            class="blog-actions">
+
+                                <a
+                                    class="update-btn"
+                                    th:href="@{/updateBlog/{id}(id=${post.id})}">
+
+                                    Update
+
+                                </a>
+
+
+                                <a
+                                    class="delete-btn"
+                                    th:href="@{/deleteBlog/{id}(id=${post.id})}"
+                                    onclick="return confirm('Are you sure you want to delete this post?');">
+
+                                    Delete
+
+                                </a>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </c:forEach>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        <p>
+            Copyright &copy; iBlog.com
+        </p>
+
+    </div>
+
+
+</body>
+
+</html>
