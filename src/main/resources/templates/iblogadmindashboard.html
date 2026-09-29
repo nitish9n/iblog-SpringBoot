@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -6,7 +7,7 @@
     <meta charset="UTF-8">
 
     <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+          content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" th:href="@{/css/utils.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
@@ -188,7 +189,6 @@
                 width: 100%;
                 height: auto;
             }
-
         }
 
     </style>
@@ -216,15 +216,12 @@
 
             </a>
 
-
             <ul>
 
                 <li>
 
                     <a th:href="@{/adminDashboard}">
-
                         Dashboard
-
                     </a>
 
                 </li>
@@ -232,9 +229,7 @@
                 <li>
 
                     <a th:href="@{/adminMessages}">
-
                         Messages
-
                     </a>
 
                 </li>
@@ -248,19 +243,16 @@
 
         <div class="admin-nav">
 
-            <div
-                th:if="${session.loggedInAdmin != null}">
+            <div th:if="${session.loggedInAdmin != null}">
 
                 <span class="admin-welcome">
 
                     Hi,
 
-                    <span
-                        th:text="${session.loggedInAdmin.username}">
+                    <span th:text="${session.loggedInAdmin.username}">
                     </span>
 
                 </span>
-
 
                 <a
                     th:href="@{/adminLogout}"
@@ -303,15 +295,11 @@
         <div class="admin-header">
 
             <h1>
-
                 Admin Dashboard
-
             </h1>
 
             <p>
-
                 Manage blogs and user messages from here.
-
             </p>
 
         </div>
@@ -327,23 +315,19 @@
             <div class="admin-card">
 
                 <h3>
-
                     Pending Blogs
-
                 </h3>
 
                 <div
                     class="admin-number"
-                    th:text="${pendingPosts.size()}">
+                    th:text="${pendingPosts != null ? pendingPosts.size() : 0}">
 
                     0
 
                 </div>
 
                 <p>
-
                     Blogs waiting for your approval.
-
                 </p>
 
             </div>
@@ -354,24 +338,17 @@
             <div class="admin-card">
 
                 <h3>
-
                     User Messages
-
                 </h3>
 
                 <p>
-
                     View messages received from users.
-
                 </p>
 
                 <br>
 
-                <a
-                    th:href="@{/adminMessages}">
-
+                <a th:href="@{/adminMessages}">
                     View Messages
-
                 </a>
 
             </div>
@@ -384,9 +361,7 @@
         <div class="pending-section">
 
             <h2>
-
                 Blogs Waiting for Approval
-
             </h2>
 
 
@@ -394,7 +369,7 @@
 
             <p
                 class="no-pending"
-                th:if="${#lists.isEmpty(pendingPosts)}">
+                th:if="${pendingPosts == null or #lists.isEmpty(pendingPosts)}">
 
                 There are no blogs waiting for approval.
 
@@ -408,11 +383,8 @@
                 class="pending-post">
 
 
-                <h3
-                    th:text="${post.title}">
-
+                <h3 th:text="${post.title}">
                     Blog Title
-
                 </h3>
 
 
@@ -420,8 +392,7 @@
 
                     Author:
 
-                    <span
-                        th:text="${post.author}">
+                    <span th:text="${post.author}">
                     </span>
 
                 </div>
@@ -431,8 +402,7 @@
 
                     Submitted:
 
-                    <span
-                        th:text="${post.createdAt}">
+                    <span th:text="${post.createdAt}">
                     </span>
 
                 </div>
@@ -508,13 +478,10 @@
     <div class="footer">
 
         <p>
-
             Copyright &copy; iBlog.com
-
         </p>
 
     </div>
-
 
 </body>
 

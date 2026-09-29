@@ -1,11 +1,14 @@
+
 <!DOCTYPE html>
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+          content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" th:href="@{/css/utils.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
@@ -14,6 +17,7 @@
     <title>About iBlog</title>
 
     <style>
+
         .about-content {
             padding: 40px 0;
         }
@@ -110,12 +114,15 @@
         }
 
         @media screen and (max-width: 900px) {
+
             .features {
                 grid-template-columns: repeat(2, 1fr);
             }
+
         }
 
         @media screen and (max-width: 600px) {
+
             .features {
                 grid-template-columns: 1fr;
             }
@@ -123,27 +130,36 @@
             .about-header h1 {
                 font-size: 30px;
             }
+
         }
+
     </style>
+
 </head>
 
 <body>
 
     <!-- Navigation -->
+
     <nav class="navigation max-width-1 m-auto">
 
         <div class="nav-left">
 
             <a th:href="@{/}">
+
                 <span>
+
                     <img
                         th:src="@{/logo.png}"
                         width="94px"
                         alt="iBlog">
+
                 </span>
+
             </a>
 
             <ul>
+
                 <li>
                     <a th:href="@{/}">
                         Home
@@ -167,11 +183,14 @@
                         Add Blog
                     </a>
                 </li>
+
             </ul>
 
         </div>
 
+
         <!-- Search -->
+
         <div class="nav-search">
 
             <form
@@ -196,7 +215,9 @@
 
         </div>
 
+
         <!-- Login -->
+
         <div class="nav-login">
 
             <a
@@ -211,64 +232,85 @@
 
     </nav>
 
+
     <div class="max-width-1 m-auto">
+
         <hr>
+
     </div>
 
+
     <!-- About Content -->
+
     <div class="about-content max-width-1 m-auto">
 
+
         <!-- Header -->
+
         <div class="about-header">
 
             <h1>About iBlog</h1>
 
             <p>
+
                 A simple and interactive platform where
                 people can write, share and discover
                 interesting blog posts.
+
             </p>
 
         </div>
 
+
         <!-- Introduction -->
+
         <div class="about-section">
 
             <h2>Welcome to iBlog</h2>
 
             <p>
+
                 iBlog is a blogging platform developed to
                 provide users with a simple place to share
                 their knowledge, ideas, experiences and
                 opinions through blog posts.
+
             </p>
 
             <p>
+
                 Users can explore articles written by other
                 bloggers, search for specific topics and,
                 after logging in, create their own blog posts.
                 Each blog can contain a title, detailed content
                 and an optional image.
+
             </p>
 
         </div>
 
+
         <!-- Mission -->
+
         <div class="about-section">
 
             <h2>Our Purpose</h2>
 
             <p>
+
                 The main purpose of iBlog is to make blogging
                 simple and accessible. The platform provides
                 an easy-to-use environment where users can
                 express their thoughts and share useful
                 information with other readers.
+
             </p>
 
         </div>
 
+
         <!-- Features -->
+
         <div class="about-section">
 
             <h2>What You Can Do on iBlog</h2>
@@ -280,64 +322,81 @@
                     <h3>📖 Read Blogs</h3>
 
                     <p>
+
                         Browse blog posts and read articles
                         published by different users.
+
                     </p>
 
                 </div>
+
 
                 <div class="feature-box">
 
                     <h3>✍️ Write Blogs</h3>
 
                     <p>
+
                         Logged-in users can create and publish
                         their own blog posts with titles,
                         content and images.
+
                     </p>
 
                 </div>
+
 
                 <div class="feature-box">
 
                     <h3>🔍 Search Articles</h3>
 
                     <p>
+
                         Search for blog posts using keywords
                         in the title or content.
+
                     </p>
 
                 </div>
+
 
                 <div class="feature-box">
 
                     <h3>✏️ Update Blogs</h3>
 
                     <p>
+
                         Blog authors can update their own
                         posts whenever they want.
+
                     </p>
 
                 </div>
+
 
                 <div class="feature-box">
 
                     <h3>🗑️ Delete Blogs</h3>
 
                     <p>
+
                         Authors can remove their own blog
                         posts from the platform.
+
                     </p>
 
                 </div>
+
 
                 <div class="feature-box">
 
                     <h3>🖼️ Add Images</h3>
 
                     <p>
+
                         Users can optionally upload an image
                         along with their blog post.
+
                     </p>
 
                 </div>
@@ -346,7 +405,9 @@
 
         </div>
 
+
         <!-- How It Works -->
+
         <div class="about-section">
 
             <h2>How iBlog Works</h2>
@@ -397,31 +458,39 @@
 
         </div>
 
+
         <!-- Technology -->
+
         <div class="about-section">
 
             <h2>Technology Behind iBlog</h2>
 
             <p>
+
                 iBlog is developed using a layered
                 Spring Boot architecture. The application
                 uses Spring MVC for request handling,
                 persistence technologies for database
                 communication, and MySQL for storing
                 application data.
+
             </p>
 
             <p>
+
                 Thymeleaf is used to create the application's
                 server-side HTML user interface, while
                 uploaded blog images are handled separately
                 through the application's image storage
                 directory.
+
             </p>
 
         </div>
 
+
         <!-- Button -->
+
         <div class="about-button">
 
             <a th:href="@{/blogs}">
@@ -432,7 +501,9 @@
 
     </div>
 
+
     <!-- Footer -->
+
     <div class="footer">
 
         <p>
@@ -442,4 +513,6 @@
     </div>
 
 </body>
+
 </html>
+

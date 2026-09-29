@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <!-- ================= CSS ================= -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/utils.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/mobile.css}">
+
+    <title>My Messages - iBlog</title>
+
+
+    <style>
+
+        .messages-container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+        .message-card {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .message-card h2 {
+            margin-bottom: 12px;
+        }
+
+        .message-info {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        .message-section {
+            margin-top: 18px;
+        }
+
+        .message-section h3 {
+            margin-bottom: 8px;
+        }
+
+        .message-text {
+            background: #f7f7f7;
+            padding: 15px;
+            border-radius: 5px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .reply-box {
+            background: #eaf7f5;
+            padding: 15px;
+            border-radius: 5px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .replied {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .no-messages {
+            background: #ffffff;
+            text-align: center;
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-nav a {
+            text-decoration: none;
+        }
+
+        .welcome-user {
+            font-size: 14px;
+        }
+
+        .messages-link {
+            font-weight: bold;
+        }
+
+        .logout-link {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVIGATION ================= -->
+
+    <nav class="navigation max-width-1 m-auto">
+
+        <div class="nav-left">
+
+
+            <!-- LOGO -->
+
+            <a th:href="@{/}">
+
+                <span>
+
+                    <img
+                        th:src="@{/logo.png}"
+                        width="94px"
+                        alt="iBlog">
+
+                </span>
+
+            </a>
+
+
+            <!-- NAVIGATION LINKS -->
+
+            <ul>
+
+                <li>
+                    <a th:href="@{/}">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/about}">
+                        About
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/contact}">
+                        Contact
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/addBlog}">
+                        Add Blog
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- ================= SEARCH ================= -->
+
+        <div class="nav-search">
+
+            <form
+                th:action="@{/search}"
+                method="get">
+
+                <input
+                    class="form-input"
+                    type="text"
+                    name="query"
+                    placeholder="Article Search"
+                    required>
+
+                <button
+                    class="btn"
+                    type="submit">
+
+                    Search
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- ================= USER NAVIGATION ================= -->
+
+        <div class="nav-login">
+
+
+            <!-- LOGGED-IN USER -->
+
+            <div
+                class="user-nav"
+                th:if="${session.loggedInUser != null}">
+
+                <span class="welcome-user">
+
+                    Hi,
+
+                    <span th:text="${session.loggedInUser.username}">
+                        User
+                    </span>
+
+                </span>
+
+
+                <!-- MY MESSAGES -->
+
+                <a
+                    th:href="@{/myMessages}"
+                    class="messages-link">
+
+                    My Messages
+
+                </a>
+
+
+                <!-- LOGOUT -->
+
+                <a
+                    th:href="@{/logout}"
+                    class="logout-link">
+
+                    Logout
+
+                </a>
+
+            </div>
+
+
+            <!-- NOT LOGGED IN -->
+
+            <a
+                th:unless="${session.loggedInUser != null}"
+                th:href="@{/login}"
+                class="login-link">
+
+                Sign In
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= DIVIDER ================= -->
+
+    <div class="max-width-1 m-auto">
+
+        <hr>
+
+    </div>
+
+
+    <!-- ================= MESSAGES ================= -->
+
+    <div class="messages-container">
+
+
+        <h1>
+            My Messages
+        </h1>
+
+
+        <p style="margin-top: 10px; margin-bottom: 25px;">
+
+            Messages you have sent to the iBlog admin
+            and their replies.
+
+        </p>
+
+
+        <!-- ================= MESSAGE LIST ================= -->
+
+        <th:block
+            th:if="${messages != null and !#lists.isEmpty(messages)}">
+
+
+            <!-- LOOP THROUGH MESSAGES -->
+
+            <div
+                class="message-card"
+                th:each="message : ${messages}">
+
+
+                <!-- SUBJECT -->
+
+                <h2 th:text="${message.subject}">
+                    Message Subject
+                </h2>
+
+
+                <!-- DATE + STATUS -->
+
+                <div class="message-info">
+
+                    <strong>
+                        Sent:
+                    </strong>
+
+                    <span th:text="${message.createdAt}">
+                        Date
+                    </span>
+
+                    &nbsp; | &nbsp;
+
+
+                    <strong>
+                        Status:
+                    </strong>
+
+
+                    <!-- REPLIED -->
+
+                    <span
+                        class="status replied"
+                        th:if="${message.status == 'REPLIED'}">
+
+                        REPLIED
+
+                    </span>
+
+
+                    <!-- PENDING -->
+
+                    <span
+                        class="status pending"
+                        th:unless="${message.status == 'REPLIED'}">
+
+                        PENDING
+
+                    </span>
+
+                </div>
+
+
+                <!-- ================= USER MESSAGE ================= -->
+
+                <div class="message-section">
+
+                    <h3>
+                        Your Message
+                    </h3>
+
+                    <div
+                        class="message-text"
+                        th:text="${message.message}">
+
+                        User message
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= ADMIN REPLY ================= -->
+
+                <!-- REPLY EXISTS -->
+
+                <div
+                    class="message-section"
+                    th:if="${message.reply != null and !#strings.isEmpty(message.reply)}">
+
+
+                    <h3>
+                        Admin Reply
+                    </h3>
+
+
+                    <div
+                        class="reply-box"
+                        th:text="${message.reply}">
+
+                        Admin reply
+
+                    </div>
+
+
+                    <!-- REPLIED DATE -->
+
+                    <div
+                        class="message-info"
+                        style="margin-top: 12px;">
+
+                        <strong>
+                            Replied:
+                        </strong>
+
+                        <span th:text="${message.repliedAt}">
+                            Date
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NO REPLY YET -->
+
+                <div
+                    class="message-section"
+                    th:unless="${message.reply != null and !#strings.isEmpty(message.reply)}">
+
+
+                    <h3>
+                        Admin Reply
+                    </h3>
+
+
+                    <div class="message-text">
+
+                        Your message is waiting
+                        for an admin reply.
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </th:block>
+
+
+        <!-- ================= NO MESSAGES ================= -->
+
+        <div
+            class="no-messages"
+            th:unless="${messages != null and !#lists.isEmpty(messages)}">
+
+
+            <h2>
+                No Messages Yet
+            </h2>
+
+
+            <p style="margin-top: 10px;">
+
+                You have not contacted the
+                iBlog admin yet.
+
+            </p>
+
+
+            <p style="margin-top: 20px;">
+
+                <a
+                    th:href="@{/contact}"
+                    class="btn">
+
+                    Contact Admin
+
+                </a>
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="footer">
+
+        <p>
+            Copyright &copy; iBlog.com
+        </p>
+
+    </div>
+
+
+</body>
+
+</html>

@@ -6,16 +6,16 @@
     <meta charset="UTF-8">
 
     <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+          content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
-        th:href="@{/css/utils.css}">
+          th:href="@{/css/utils.css}">
 
     <link rel="stylesheet"
-        th:href="@{/css/style.css}">
+          th:href="@{/css/style.css}">
 
     <link rel="stylesheet"
-        th:href="@{/css/mobile.css}">
+          th:href="@{/css/mobile.css}">
 
     <title>iBlog - Heaven for bloggers</title>
 
@@ -206,18 +206,20 @@
 <body>
 
 
-    <!-- NAVIGATION -->
+    <!-- ================= NAVIGATION ================= -->
 
     <nav class="navigation max-width-1 m-auto">
 
         <div class="nav-left">
+
+            <!-- LOGO -->
 
             <a th:href="@{/}">
 
                 <span>
 
                     <img
-                        th:src="@{/img/logo.png}"
+                        th:src="@{/logo.png}"
                         width="94px"
                         alt="iBlog">
 
@@ -225,6 +227,8 @@
 
             </a>
 
+
+            <!-- NAVIGATION LINKS -->
 
             <ul>
 
@@ -257,7 +261,7 @@
         </div>
 
 
-        <!-- SEARCH -->
+        <!-- ================= SEARCH ================= -->
 
         <div class="nav-search">
 
@@ -285,16 +289,21 @@
         </div>
 
 
-        <!-- LOGIN / USER -->
+        <!-- ================= LOGIN / USER ================= -->
 
         <div class="nav-login">
 
-            <div th:if="${session.loggedInUser != null}" class="user-nav">
+            <div
+                th:if="${session.loggedInUser != null}"
+                class="user-nav">
 
                 <span class="welcome-user">
 
                     Hi,
-                    <span th:text="${session.loggedInUser.username}"></span>
+
+                    <span
+                        th:text="${session.loggedInUser.username}">
+                    </span>
 
                 </span>
 
@@ -333,6 +342,8 @@
     </nav>
 
 
+    <!-- ================= DIVIDER ================= -->
+
     <div class="max-width-1 m-auto">
 
         <hr>
@@ -340,7 +351,7 @@
     </div>
 
 
-    <!-- HOME CONTENT -->
+    <!-- ================= HOME CONTENT ================= -->
 
     <div class="m-auto content max-width-1 my-2">
 
@@ -374,13 +385,15 @@
         <div class="content-right">
 
             <img
-                th:src="@{/img/home.svg}"
+                th:src="@{/home.svg}"
                 alt="iBlog">
 
         </div>
 
     </div>
 
+
+    <!-- ================= DIVIDER ================= -->
 
     <div class="max-width-1 m-auto">
 
@@ -389,7 +402,7 @@
     </div>
 
 
-    <!-- BLOGS -->
+    <!-- ================= BLOGS ================= -->
 
     <div class="home-articles max-width-1 m-auto font2">
 
@@ -398,113 +411,152 @@
         </h2>
 
 
-        <p th:if="${#lists.isEmpty(posts)}">
+        <!-- NO BLOGS -->
+
+        <p th:if="${posts == null or #lists.isEmpty(posts)}">
+
             No blogs available yet.
+
         </p>
 
 
+        <!-- BLOG GRID -->
+
         <div class="blog-grid">
 
-            <div th:each="post : ${posts}" class="blog-card">
+            <div
+                th:each="post : ${posts}"
+                class="blog-card">
 
 
-                    <!-- IMAGE -->
+                <!-- ================= IMAGE ================= -->
 
-                    <img
-                        th:if="${post.imageName != null and !#strings.isEmpty(post.imageName)}"
-                        class="blog-card-image"
-                        th:src="@{/img/blogs/{image}(image=${post.imageName})}"
-                        th:alt="${post.title}">
+                <!-- UPLOADED BLOG IMAGE -->
 
-                    <img
-                        th:unless="${post.imageName != null and !#strings.isEmpty(post.imageName)}"
-                        class="blog-card-image"
-                        th:src="@{/img/3.png}"
-                        alt="iBlog">
+                <img
+                    th:if="${post.imageName != null and !#strings.isEmpty(post.imageName)}"
+                    class="blog-card-image"
+                    th:src="@{/img/blogs/{image}(image=${post.imageName})}"
+                    th:alt="${post.title}">
 
 
-                    <!-- CONTENT -->
+                <!-- DEFAULT IMAGE -->
 
-                    <div class="blog-card-content">
-
-
-                        <h3>
-
-                            <a
-                                th:href="@{/blogpost/{id}(id=${post.id})}"
-                                th:text="${post.title}">
-                            </a>
-
-                        </h3>
+                <img
+                    th:unless="${post.imageName != null and !#strings.isEmpty(post.imageName)}"
+                    class="blog-card-image"
+                    th:src="@{/3.png}"
+                    alt="iBlog">
 
 
-                        <div class="blog-author">
+                <!-- ================= CONTENT ================= -->
 
-                            By <span th:text="${post.author}"></span>
-
-                        </div>
+                <div class="blog-card-content">
 
 
-                        <div class="blog-date">
+                    <!-- BLOG TITLE -->
 
-                            <span th:text="${post.createdAt}"></span>
-
-                        </div>
-
-
-                        <div class="blog-preview">
-
-                            <span th:text="${post.content}"></span>
-
-                        </div>
-
+                    <h3>
 
                         <a
-                            class="read-more"
-                            th:href="@{/blogpost/{id}(id=${post.id})}">
+                            th:href="@{/blogpost/{id}(id=${post.id})}"
+                            th:text="${post.title}">
 
-                            Read Full Blog →
+                            Blog Title
+
+                        </a>
+
+                    </h3>
+
+
+                    <!-- AUTHOR -->
+
+                    <div class="blog-author">
+
+                        By
+
+                        <span
+                            th:text="${post.author}">
+                        </span>
+
+                    </div>
+
+
+                    <!-- DATE -->
+
+                    <div class="blog-date">
+
+                        <span
+                            th:text="${post.createdAt}">
+                        </span>
+
+                    </div>
+
+
+                    <!-- BLOG PREVIEW -->
+
+                    <div class="blog-preview">
+
+                        <span
+                            th:text="${post.content}">
+                        </span>
+
+                    </div>
+
+
+                    <!-- READ MORE -->
+
+                    <a
+                        class="read-more"
+                        th:href="@{/blogpost/{id}(id=${post.id})}">
+
+                        Read Full Blog →
+
+                    </a>
+
+
+                    <!-- ================= OWNER ACTIONS ================= -->
+
+                    <div
+                        th:if="${session.loggedInUser != null and session.loggedInUser.username == post.author}"
+                        class="blog-actions">
+
+
+                        <!-- UPDATE -->
+
+                        <a
+                            class="update-btn"
+                            th:href="@{/updateBlog/{id}(id=${post.id})}">
+
+                            Update
 
                         </a>
 
 
-                        <div
-                            th:if="${session.loggedInUser != null and session.loggedInUser.username == post.author}"
-                            class="blog-actions">
+                        <!-- DELETE -->
 
-                                <a
-                                    class="update-btn"
-                                    th:href="@{/updateBlog/{id}(id=${post.id})}">
+                        <a
+                            class="delete-btn"
+                            th:href="@{/deleteBlog/{id}(id=${post.id})}"
+                            onclick="return confirm('Are you sure you want to delete this post?');">
 
-                                    Update
+                            Delete
 
-                                </a>
-
-
-                                <a
-                                    class="delete-btn"
-                                    th:href="@{/deleteBlog/{id}(id=${post.id})}"
-                                    onclick="return confirm('Are you sure you want to delete this post?');">
-
-                                    Delete
-
-                                </a>
-
-                        </div>
-
+                        </a>
 
                     </div>
 
+
                 </div>
 
-            </c:forEach>
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- FOOTER -->
+    <!-- ================= FOOTER ================= -->
 
     <div class="footer">
 

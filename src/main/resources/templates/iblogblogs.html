@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Blogs - iBlog</title>
+
+
+    <!-- ================= CSS ================= -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/utils.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/mobile.css}">
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVIGATION ================= -->
+
+    <nav class="navigation max-width-1 m-auto">
+
+        <div class="nav-left">
+
+
+            <!-- LOGO -->
+
+            <a th:href="@{/}">
+
+                <span>
+
+                    <img
+                        th:src="@{/logo.png}"
+                        width="94px"
+                        alt="iBlog">
+
+                </span>
+
+            </a>
+
+
+            <!-- NAVIGATION LINKS -->
+
+            <ul>
+
+                <li>
+
+                    <a th:href="@{/}">
+
+                        Home
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a th:href="@{/about}">
+
+                        About
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a th:href="@{/contact}">
+
+                        Contact
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a th:href="@{/addBlog}">
+
+                        Add Blog
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- ================= SEARCH ================= -->
+
+        <div class="nav-search">
+
+            <form
+                th:action="@{/search}"
+                method="get">
+
+                <input
+                    class="form-input"
+                    type="text"
+                    name="query"
+                    placeholder="Article Search">
+
+                <button
+                    class="btn"
+                    type="submit">
+
+                    Search
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- ================= LOGIN ================= -->
+
+        <div class="nav-login">
+
+            <a
+                th:href="@{/login}"
+                class="login-link">
+
+                Sign In
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= DIVIDER ================= -->
+
+    <div class="max-width-1 m-auto">
+
+        <hr>
+
+    </div>
+
+
+    <!-- ================= BLOGS ================= -->
+
+    <main class="home-articles max-width-1 m-auto font2">
+
+        <h1>
+
+            All Blogs
+
+        </h1>
+
+
+        <!-- ================= NO BLOGS ================= -->
+
+        <p
+            th:if="${posts == null or #lists.isEmpty(posts)}">
+
+            No blogs found.
+
+        </p>
+
+
+        <!-- ================= BLOG LIST ================= -->
+
+        <div
+            class="home-article"
+            th:each="post : ${posts}">
+
+
+            <!-- ================= BLOG IMAGE ================= -->
+
+            <div class="home-article-img">
+
+
+                <!-- UPLOADED IMAGE -->
+
+                <img
+                    th:if="${post.imageName != null and !#strings.isEmpty(post.imageName)}"
+                    th:src="@{/img/blogs/{image}(image=${post.imageName})}"
+                    th:alt="${post.title}">
+
+
+                <!-- DEFAULT IMAGE -->
+
+                <img
+                    th:unless="${post.imageName != null and !#strings.isEmpty(post.imageName)}"
+                    th:src="@{/3.png}"
+                    alt="iBlog">
+
+            </div>
+
+
+            <!-- ================= BLOG CONTENT ================= -->
+
+            <div class="home-article-content font1">
+
+
+                <!-- BLOG TITLE -->
+
+                <h2>
+
+                    <a
+                        th:href="@{/blogpost/{id}(id=${post.id})}"
+                        th:text="${post.title}">
+
+                        Blog Title
+
+                    </a>
+
+                </h2>
+
+
+                <!-- AUTHOR -->
+
+                <p>
+
+                    <strong>
+
+                        By:
+
+                    </strong>
+
+                    <span
+                        th:text="${post.author}">
+
+                        Author
+
+                    </span>
+
+                </p>
+
+
+                <!-- BLOG DATE -->
+
+                <p>
+
+                    <strong>
+
+                        Date:
+
+                    </strong>
+
+                    <span
+                        th:text="${post.createdAt}">
+
+                        Date
+
+                    </span>
+
+                </p>
+
+
+                <!-- BLOG CONTENT -->
+
+                <p
+                    th:text="${post.content}">
+
+                    Blog content
+
+                </p>
+
+
+                <br>
+
+
+                <!-- READ MORE -->
+
+                <a
+                    th:href="@{/blogpost/{id}(id=${post.id})}">
+
+                    Read More →
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="footer">
+
+        <p>
+
+            Copyright &copy; iBlog.com
+
+        </p>
+
+    </div>
+
+
+</body>
+
+</html>

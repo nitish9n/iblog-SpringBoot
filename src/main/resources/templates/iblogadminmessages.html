@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/utils.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/mobile.css}">
+
+    <title>Admin Messages - iBlog</title>
+
+
+    <style>
+
+        body {
+            background: #f5f5f5;
+        }
+
+        .admin-container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .admin-header {
+            margin-bottom: 30px;
+        }
+
+        .admin-header h1 {
+            margin-bottom: 10px;
+        }
+
+        .admin-header p {
+            color: #666;
+        }
+
+        .message-card {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .message-card h2 {
+            margin-bottom: 15px;
+        }
+
+        .message-info {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .message-content {
+            background: #f7f7f7;
+            padding: 15px;
+            border-radius: 5px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+        }
+
+        .reply-box {
+            margin-top: 20px;
+        }
+
+        .reply-box label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .reply-box textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .reply-btn {
+            margin-top: 10px;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 5px;
+            background: #457b9d;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .reply-btn:hover {
+            background: #35657f;
+        }
+
+        .previous-reply {
+            background: #eaf7f5;
+            padding: 15px;
+            border-radius: 5px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .replied {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .no-messages {
+            background: #ffffff;
+            text-align: center;
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .admin-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .admin-nav a {
+            text-decoration: none;
+        }
+
+        .admin-welcome {
+            font-weight: bold;
+        }
+
+        .logout-link {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 25px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media screen and (max-width: 700px) {
+
+            .admin-nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- ================= NAVIGATION ================= -->
+
+    <nav class="navigation max-width-1 m-auto">
+
+        <div class="nav-left">
+
+            <!-- LOGO -->
+
+            <a th:href="@{/}">
+
+                <span>
+
+                    <img
+                        th:src="@{/logo.png}"
+                        width="94px"
+                        alt="iBlog">
+
+                </span>
+
+            </a>
+
+
+            <ul>
+
+                <li>
+
+                    <a th:href="@{/adminDashboard}">
+                        Dashboard
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a th:href="@{/adminMessages}">
+                        Messages
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- ================= ADMIN LOGIN STATUS ================= -->
+
+        <div class="admin-nav">
+
+            <!-- LOGGED-IN ADMIN -->
+
+            <th:block th:if="${session.loggedInAdmin != null}">
+
+                <span class="admin-welcome">
+
+                    Hi,
+
+                    <span th:text="${session.loggedInAdmin.username}">
+                        Admin
+                    </span>
+
+                </span>
+
+
+                <a
+                    th:href="@{/adminLogout}"
+                    class="logout-link">
+
+                    Logout
+
+                </a>
+
+            </th:block>
+
+
+            <!-- ADMIN NOT LOGGED IN -->
+
+            <th:block th:unless="${session.loggedInAdmin != null}">
+
+                <a th:href="@{/adminLogin}">
+                    Admin Login
+                </a>
+
+            </th:block>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= DIVIDER ================= -->
+
+    <div class="max-width-1 m-auto">
+
+        <hr>
+
+    </div>
+
+
+    <!-- ================= ADMIN MESSAGES ================= -->
+
+    <div class="admin-container">
+
+
+        <div class="admin-header">
+
+            <h1>
+                User Messages
+            </h1>
+
+            <p>
+                Messages received from iBlog users.
+            </p>
+
+        </div>
+
+
+        <!-- BACK TO DASHBOARD -->
+
+        <a
+            th:href="@{/adminDashboard}"
+            class="back-link">
+
+            ← Back to Dashboard
+
+        </a>
+
+
+        <!-- ================= MESSAGES ================= -->
+
+        <th:block
+            th:if="${messages != null and !#lists.isEmpty(messages)}">
+
+
+            <!-- LOOP THROUGH MESSAGES -->
+
+            <div
+                class="message-card"
+                th:each="message : ${messages}">
+
+
+                <!-- SUBJECT -->
+
+                <h2 th:text="${message.subject}">
+                    Message Subject
+                </h2>
+
+
+                <!-- NAME + EMAIL -->
+
+                <div class="message-info">
+
+                    <strong>
+                        Name:
+                    </strong>
+
+                    <span th:text="${message.name}">
+                        User Name
+                    </span>
+
+                    &nbsp;&nbsp; | &nbsp;&nbsp;
+
+
+                    <strong>
+                        Email:
+                    </strong>
+
+                    <span th:text="${message.email}">
+                        user@email.com
+                    </span>
+
+                </div>
+
+
+                <!-- DATE + STATUS -->
+
+                <div class="message-info">
+
+                    <strong>
+                        Sent:
+                    </strong>
+
+                    <span th:text="${message.createdAt}">
+                        Date
+                    </span>
+
+                    &nbsp;&nbsp; | &nbsp;&nbsp;
+
+
+                    <strong>
+                        Status:
+                    </strong>
+
+
+                    <!-- REPLIED -->
+
+                    <span
+                        class="status replied"
+                        th:if="${message.status == 'REPLIED'}">
+
+                        REPLIED
+
+                    </span>
+
+
+                    <!-- PENDING -->
+
+                    <span
+                        class="status pending"
+                        th:unless="${message.status == 'REPLIED'}">
+
+                        PENDING
+
+                    </span>
+
+                </div>
+
+
+                <!-- USER MESSAGE -->
+
+                <div>
+
+                    <strong>
+                        User Message
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="message-content"
+                    th:text="${message.message}">
+
+                    User message
+
+                </div>
+
+
+                <!-- ================= PREVIOUS REPLY ================= -->
+
+                <th:block
+                    th:if="${message.reply != null and !#strings.isEmpty(message.reply)}">
+
+                    <div>
+
+                        <strong>
+                            Previous Admin Reply
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="previous-reply"
+                        th:text="${message.reply}">
+
+                        Previous reply
+
+                    </div>
+
+                </th:block>
+
+
+                <!-- ================= REPLY BOX ================= -->
+
+                <div class="reply-box">
+
+
+                    <form
+                        th:action="@{/replyMessage}"
+                        method="post">
+
+
+                        <!-- MESSAGE ID -->
+
+                        <input
+                            type="hidden"
+                            name="id"
+                            th:value="${message.id}">
+
+
+                        <!-- REPLY LABEL -->
+
+                        <label
+                            th:for="'reply-' + ${message.id}">
+
+                            Reply to User
+
+                        </label>
+
+
+                        <!-- REPLY TEXTAREA -->
+
+                        <textarea
+                            th:id="'reply-' + ${message.id}"
+                            name="reply"
+                            placeholder="Write your reply here..."
+                            required></textarea>
+
+
+                        <!-- SEND REPLY -->
+
+                        <button
+                            type="submit"
+                            class="reply-btn">
+
+                            Send Reply
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </th:block>
+
+
+        <!-- ================= NO MESSAGES ================= -->
+
+        <div
+            class="no-messages"
+            th:unless="${messages != null and !#lists.isEmpty(messages)}">
+
+            <h2>
+                No Messages Yet
+            </h2>
+
+            <p style="margin-top: 10px;">
+                No user messages have been
+                received yet.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="footer">
+
+        <p>
+            Copyright &copy; iBlog.com
+        </p>
+
+    </div>
+
+
+</body>
+
+</html>

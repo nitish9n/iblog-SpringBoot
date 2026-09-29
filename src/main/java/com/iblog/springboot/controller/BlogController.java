@@ -2,6 +2,8 @@ package com.iblog.springboot.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,29 @@ public class BlogController {
 
     @Autowired
     private PostService postService;
+
+    /*
+     * Uploaded blog images will be stored outside
+     * src/main/resources/static.
+     *
+     * Project folder:
+     *
+     * iBlog/
+     * ├── uploads/
+     * │   └── blogs/
+     * │
+     * └── src/
+     *     └── main/
+     *         └── resources/
+     *             └── static/
+     */
+
+    private static final Path UPLOAD_DIR =
+            Paths.get(
+                    System.getProperty("user.dir"),
+                    "uploads",
+                    "blogs"
+            );
 
 
     // ================= ADD BLOG PAGE =================
@@ -66,7 +91,8 @@ public class BlogController {
         }
 
 
-        // Set the logged-in user as author
+        // ================= AUTHOR =================
+
         post.setAuthor(
                 user.getUsername());
 
@@ -90,34 +116,48 @@ public class BlogController {
             }
 
 
+            /*
+             * Generate a unique filename.
+             */
+
             String fileName =
                     System.currentTimeMillis()
                     + fileExtension;
 
 
-            String uploadDirectory =
-                    session.getServletContext()
-                           .getRealPath(
-                                   "/img/blogs");
-
+            /*
+             * Create uploads/blogs directory
+             * if it does not already exist.
+             */
 
             File directory =
-                    new File(uploadDirectory);
+                    UPLOAD_DIR.toFile();
 
             if (!directory.exists()) {
                 directory.mkdirs();
             }
 
 
-            File destination =
-                    new File(
-                            directory,
-                            fileName);
+            /*
+             * Create the complete destination path.
+             */
 
+            Path destination =
+                    UPLOAD_DIR.resolve(fileName);
+
+
+            /*
+             * Save the uploaded image.
+             */
 
             image.transferTo(
-                    destination);
+                    destination.toFile());
 
+
+            /*
+             * Store only the filename
+             * in the database.
+             */
 
             post.setImageName(
                     fileName);
@@ -317,8 +357,13 @@ public class BlogController {
         }
 
 
+        // ================= UPDATE TITLE =================
+
         existingPost.setTitle(
                 updatedPost.getTitle());
+
+
+        // ================= UPDATE CONTENT =================
 
         existingPost.setContent(
                 updatedPost.getContent());
@@ -343,35 +388,47 @@ public class BlogController {
             }
 
 
+            /*
+             * Generate a unique filename.
+             */
+
             String fileName =
                     System.currentTimeMillis()
                     + fileExtension;
 
 
-            String uploadDirectory =
-                    session.getServletContext()
-                           .getRealPath(
-                                   "/img/blogs");
-
+            /*
+             * Create uploads/blogs directory
+             * if it does not already exist.
+             */
 
             File directory =
-                    new File(uploadDirectory);
-
+                    UPLOAD_DIR.toFile();
 
             if (!directory.exists()) {
                 directory.mkdirs();
             }
 
 
-            File destination =
-                    new File(
-                            directory,
-                            fileName);
+            /*
+             * Create destination path.
+             */
 
+            Path destination =
+                    UPLOAD_DIR.resolve(fileName);
+
+
+            /*
+             * Save the new image.
+             */
 
             image.transferTo(
-                    destination);
+                    destination.toFile());
 
+
+            /*
+             * Update the filename in the Post entity.
+             */
 
             existingPost.setImageName(
                     fileName);

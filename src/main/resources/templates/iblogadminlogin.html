@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>iBlog - Admin Login</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #ffffff;
+            color: #111111;
+        }
+
+        /* ================= NAVIGATION ================= */
+
+        .navigation {
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            min-height: 145px;
+            display: flex;
+            align-items: center;
+            padding: 20px 30px;
+            gap: 45px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .nav-left a {
+            text-decoration: none;
+            color: #111111;
+        }
+
+        .logo {
+            width: 94px;
+            height: 94px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 38px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 27px;
+            color: #111111;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover {
+            color: #c7660d;
+        }
+
+        .divider {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .divider hr {
+            border: 0;
+            border-top: 1px solid #dddddd;
+        }
+
+        /* ================= LOGIN AREA ================= */
+
+        .login-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 70px 20px 80px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 620px;
+            background: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 12px;
+            padding: 48px 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .login-title {
+            text-align: center;
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            font-size: 17px;
+            margin-bottom: 42px;
+            color: #333333;
+        }
+
+        /* ================= ERROR ================= */
+
+        .error-message {
+            background: #f8d7da;
+            color: #842029;
+            border: 1px solid #f5c2c7;
+            border-radius: 6px;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        /* ================= FORM ================= */
+
+        .login-form {
+            width: 100%;
+        }
+
+        .form-group {
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .form-group input {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: 52px;
+            padding: 0 14px;
+            border: 2px solid #d06a0b;
+            border-radius: 7px;
+            outline: none;
+            font-size: 16px;
+            font-family: inherit;
+        }
+
+        .form-group input:focus {
+            border-color: #a94f00;
+            box-shadow: 0 0 0 2px rgba(208, 106, 11, 0.12);
+        }
+
+        .form-group input::placeholder {
+            color: #777777;
+        }
+
+        /* ================= BUTTON ================= */
+
+        .login-button {
+            display: block;
+            width: 100%;
+            height: 54px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 7px;
+            background: #c7660d;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+
+        .login-button:hover {
+            background: #a95305;
+        }
+
+        .login-button:active {
+            transform: scale(0.99);
+        }
+
+        /* ================= BACK LINK ================= */
+
+        .back-section {
+            text-align: center;
+            margin-top: 28px;
+        }
+
+        .back-section a {
+            color: #c7660d;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .back-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 20px;
+            color: #555555;
+            font-size: 14px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media screen and (max-width: 800px) {
+
+            .navigation {
+                min-height: auto;
+                padding: 20px;
+                gap: 25px;
+            }
+
+            .nav-left {
+                gap: 25px;
+            }
+
+            .logo {
+                width: 75px;
+                height: 75px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .nav-links a {
+                font-size: 21px;
+            }
+
+        }
+
+        @media screen and (max-width: 600px) {
+
+            .navigation {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-left {
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                width: 100%;
+                flex-wrap: wrap;
+                gap: 18px;
+            }
+
+            .nav-links a {
+                font-size: 19px;
+            }
+
+            .login-wrapper {
+                padding: 35px 15px 50px;
+            }
+
+            .login-card {
+                padding: 35px 22px;
+            }
+
+            .login-title {
+                font-size: 28px;
+            }
+
+            .login-subtitle {
+                font-size: 15px;
+                margin-bottom: 30px;
+            }
+
+            .form-group input {
+                height: 50px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ================= NAVIGATION ================= -->
+
+    <nav class="navigation">
+
+        <div class="nav-left">
+
+            <!-- LOGO -->
+
+            <a th:href="@{/}">
+
+                <img
+                    class="logo"
+                    th:src="@{/logo.png}"
+                    alt="iBlog">
+
+            </a>
+
+
+            <ul class="nav-links">
+
+                <li>
+                    <a th:href="@{/}">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/about}">
+                        About
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/contact}">
+                        Contact
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+
+    <div class="divider">
+
+        <hr>
+
+    </div>
+
+
+    <!-- ================= ADMIN LOGIN ================= -->
+
+    <main class="login-wrapper">
+
+        <div class="login-card">
+
+            <h1 class="login-title">
+                Admin Login
+            </h1>
+
+            <p class="login-subtitle">
+                Login to manage iBlog
+            </p>
+
+
+            <!-- ERROR MESSAGE -->
+
+            <div
+                class="error-message"
+                th:if="${error}"
+                th:text="${error}">
+            </div>
+
+
+            <!-- LOGIN FORM -->
+
+            <form
+                class="login-form"
+                th:action="@{/processAdminLogin}"
+                method="post">
+
+
+                <!-- USERNAME -->
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Admin Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter admin username"
+                        required>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Admin Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter admin password"
+                        required>
+
+                </div>
+
+
+                <!-- LOGIN BUTTON -->
+
+                <button
+                    type="submit"
+                    class="login-button">
+
+                    Login as Admin
+
+                </button>
+
+            </form>
+
+
+            <!-- BACK TO USER LOGIN -->
+
+            <div class="back-section">
+
+                <a th:href="@{/login}">
+                    Back to User Login
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <p>
+            Copyright &copy; iBlog.com
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <!-- ================= CSS ================= -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/utils.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/mobile.css}">
+
+    <title
+        th:text="${post != null ? post.title + ' - iBlog' : 'iBlog Blog'}">
+        iBlog Blog
+    </title>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVIGATION ================= -->
+
+    <nav class="navigation max-width-1 m-auto">
+
+        <div class="nav-left">
+
+            <!-- LOGO -->
+
+            <a th:href="@{/}">
+
+                <span>
+
+                    <img
+                        th:src="@{/logo.png}"
+                        width="94px"
+                        alt="iBlog">
+
+                </span>
+
+            </a>
+
+
+            <!-- NAVIGATION LINKS -->
+
+            <ul>
+
+                <li>
+
+                    <a th:href="@{/}">
+                        Home
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a th:href="@{/about}">
+                        About
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a th:href="@{/contact}">
+                        Contact
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a th:href="@{/blogs}">
+                        Blogs
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- ================= SEARCH ================= -->
+
+        <div class="nav-search">
+
+            <form
+                th:action="@{/search}"
+                method="get">
+
+                <input
+                    class="form-input"
+                    type="text"
+                    name="query"
+                    placeholder="Article Search"
+                    required>
+
+                <button
+                    class="btn"
+                    type="submit">
+
+                    Search
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- ================= LOGIN / USER ================= -->
+
+        <div class="nav-login">
+
+            <!-- LOGGED-IN USER -->
+
+            <div
+                th:if="${session.loggedInUser != null}"
+                class="user-nav">
+
+                <span>
+
+                    Hi,
+
+                    <span
+                        th:text="${session.loggedInUser.username}">
+                    </span>
+
+                </span>
+
+
+                <a
+                    th:href="@{/myMessages}"
+                    class="messages-link">
+
+                    My Messages
+
+                </a>
+
+
+                <a
+                    th:href="@{/logout}"
+                    class="logout-link">
+
+                    Logout
+
+                </a>
+
+            </div>
+
+
+            <!-- NOT LOGGED-IN USER -->
+
+            <a
+                th:unless="${session.loggedInUser != null}"
+                th:href="@{/login}"
+                class="login-link">
+
+                Sign In
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= DIVIDER ================= -->
+
+    <div class="max-width-1 m-auto">
+
+        <hr>
+
+    </div>
+
+
+    <!-- ================= BLOG IMAGE ================= -->
+
+    <div
+        class="post-img"
+        th:if="${post != null}">
+
+
+        <!-- UPLOADED BLOG IMAGE -->
+
+        <img
+            th:if="${post.imageName != null and !#strings.isEmpty(post.imageName)}"
+            th:src="@{/img/blogs/{image}(image=${post.imageName})}"
+            th:alt="${post.title}">
+
+
+        <!-- DEFAULT IMAGE -->
+
+        <img
+            th:unless="${post.imageName != null and !#strings.isEmpty(post.imageName)}"
+            th:src="@{/3.png}"
+            alt="iBlog">
+
+    </div>
+
+
+    <!-- ================= BLOG CONTENT ================= -->
+
+    <div
+        class="m-auto blog-post-content max-width-2 my-2"
+        th:if="${post != null}">
+
+
+        <!-- BLOG TITLE -->
+
+        <h1
+            class="font1"
+            th:text="${post.title}">
+
+            Blog Title
+
+        </h1>
+
+
+        <!-- ================= BLOG META ================= -->
+
+        <div class="blogpost-meta">
+
+
+            <!-- AUTHOR INFORMATION -->
+
+            <div class="author-info">
+
+                <div>
+
+                    <b>
+
+                        Author -
+
+                        <span
+                            th:text="${post.author}">
+                            Author
+                        </span>
+
+                    </b>
+
+                </div>
+
+
+                <div>
+
+                    <span
+                        th:text="${post.createdAt}">
+                        Date
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================= BLOG CONTENT ================= -->
+
+        <div class="blog-post-content-body font1">
+
+            <p
+                th:text="${post.content}">
+
+                Blog content
+
+            </p>
+
+        </div>
+
+
+        <!-- ================= BACK BUTTON ================= -->
+
+        <div class="blog-back">
+
+            <a
+                th:href="@{/blogs}"
+                class="btn">
+
+                ← Back to Blogs
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= BLOG NOT FOUND ================= -->
+
+    <div
+        th:unless="${post != null}"
+        class="max-width-1 m-auto my-2">
+
+        <h2>
+            Blog not found.
+        </h2>
+
+        <a
+            th:href="@{/}"
+            class="btn">
+
+            Back to Home
+
+        </a>
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="footer">
+
+        <p>
+            Copyright &copy; iBlog.com
+        </p>
+
+    </div>
+
+
+</body>
+
+</html>

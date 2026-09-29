@@ -2,18 +2,30 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" th:href="@{/css/utils.css}">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link rel="stylesheet" th:href="@{/css/mobile.css}">
+    <!-- ================= CSS ================= -->
 
-    <title>Add Blog - iBlog</title>
+    <link rel="stylesheet"
+          th:href="@{/css/utils.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/mobile.css}">
+
+    <title>Update Blog - iBlog</title>
+
 </head>
 
+
 <body>
+
 
     <!-- ================= NAVIGATION ================= -->
 
@@ -21,39 +33,56 @@
 
         <div class="nav-left">
 
+            <!-- LOGO -->
+
             <a th:href="@{/}">
+
                 <span>
+
                     <img
                         th:src="@{/logo.png}"
                         width="94px"
                         alt="iBlog">
+
                 </span>
+
             </a>
+
+
+            <!-- NAVIGATION LINKS -->
 
             <ul>
 
                 <li>
+
                     <a th:href="@{/}">
                         Home
                     </a>
+
                 </li>
 
                 <li>
+
                     <a th:href="@{/about}">
                         About
                     </a>
+
                 </li>
 
                 <li>
+
                     <a th:href="@{/contact}">
                         Contact
                     </a>
+
                 </li>
 
                 <li>
+
                     <a th:href="@{/addBlog}">
                         Add Blog
                     </a>
+
                 </li>
 
             </ul>
@@ -61,7 +90,7 @@
         </div>
 
 
-        <!-- SEARCH -->
+        <!-- ================= SEARCH ================= -->
 
         <div class="nav-search">
 
@@ -88,7 +117,7 @@
         </div>
 
 
-        <!-- LOGIN -->
+        <!-- ================= LOGIN ================= -->
 
         <div class="nav-login">
 
@@ -105,27 +134,41 @@
     </nav>
 
 
+    <!-- ================= DIVIDER ================= -->
+
     <div class="max-width-1 m-auto">
+
         <hr>
+
     </div>
 
 
-    <!-- ================= ADD BLOG ================= -->
+    <!-- ================= UPDATE BLOG ================= -->
 
     <div class="contact-content max-width-1 m-auto my-2">
 
         <h1>
-            Write Your Blog
+            Update Your Blog
         </h1>
 
 
+        <!-- ================= UPDATE FORM ================= -->
+
         <form
-            th:action="@{/processBlog}"
+            th:action="@{/processUpdateBlog}"
             method="post"
             enctype="multipart/form-data">
 
 
-            <!-- TITLE -->
+            <!-- ================= POST ID ================= -->
+
+            <input
+                type="hidden"
+                name="id"
+                th:value="${post.id}">
+
+
+            <!-- ================= TITLE ================= -->
 
             <div class="form-box">
 
@@ -138,13 +181,14 @@
                     type="text"
                     id="title"
                     name="title"
+                    th:value="${post.title}"
                     placeholder="Enter blog title"
                     required>
 
             </div>
 
 
-            <!-- CONTENT -->
+            <!-- ================= CONTENT ================= -->
 
             <div class="form-box">
 
@@ -158,18 +202,53 @@
                     name="content"
                     rows="12"
                     placeholder="Write your blog here..."
-                    required></textarea>
+                    required
+                    th:text="${post.content}"></textarea>
 
             </div>
 
 
-            <!-- IMAGE -->
+            <!-- ================= CURRENT IMAGE ================= -->
+
+            <div class="form-box">
+
+                <label>
+                    Current Blog Image
+                </label>
+
+
+                <!-- UPLOADED IMAGE EXISTS -->
+
+                <img
+                    th:if="${post.imageName != null and !#strings.isEmpty(post.imageName)}"
+                    class="current-blog-image"
+                    th:src="@{/img/blogs/{image}(image=${post.imageName})}"
+                    th:alt="${post.title}"
+                    style="max-width: 300px; display: block; margin: 10px 0;">
+
+
+                <!-- NO IMAGE -->
+
+                <img
+                    th:unless="${post.imageName != null and !#strings.isEmpty(post.imageName)}"
+                    class="current-blog-image"
+                    th:src="@{/3.png}"
+                    alt="iBlog"
+                    style="max-width: 300px; display: block; margin: 10px 0;">
+
+            </div>
+
+
+            <!-- ================= NEW IMAGE ================= -->
 
             <div class="form-box">
 
                 <label for="image">
-                    Blog Image
+
+                    Change Blog Image
+
                 </label>
+
 
                 <input
                     class="form-input"
@@ -178,14 +257,18 @@
                     name="image"
                     accept="image/*">
 
+
                 <small>
-                    Image is optional.
+
+                    Leave this empty if you want to keep
+                    the current image.
+
                 </small>
 
             </div>
 
 
-            <!-- SUBMIT -->
+            <!-- ================= SUBMIT ================= -->
 
             <div class="form-box">
 
@@ -193,11 +276,12 @@
                     class="btn"
                     type="submit">
 
-                    Publish Blog
+                    Update Blog
 
                 </button>
 
             </div>
+
 
         </form>
 
@@ -213,6 +297,7 @@
         </p>
 
     </div>
+
 
 </body>
 

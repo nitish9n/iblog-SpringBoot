@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <!-- ================= CSS ================= -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/utils.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/mobile.css}">
+
+    <title>iBlog - Sign Up</title>
+
+</head>
+
+
+<body>
+
+    <!-- ================= NAVIGATION ================= -->
+
+    <nav class="navigation max-width-1 m-auto">
+
+        <div class="nav-left">
+
+            <!-- LOGO -->
+
+            <a th:href="@{/}">
+
+                <span>
+
+                    <img
+                        th:src="@{/logo.png}"
+                        width="94px"
+                        alt="iBlog">
+
+                </span>
+
+            </a>
+
+
+            <!-- NAVIGATION LINKS -->
+
+            <ul>
+
+                <li>
+                    <a th:href="@{/}">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/about}">
+                        About
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/contact}">
+                        Contact
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= DIVIDER ================= -->
+
+    <div class="max-width-1 m-auto">
+
+        <hr>
+
+    </div>
+
+
+    <!-- ================= SIGN UP ================= -->
+
+    <div class="contact-content font1 max-width-1 m-auto my-2">
+
+        <h2>
+            Create Your iBlog Account
+        </h2>
+
+
+        <!-- SIGNUP FORM -->
+
+        <form
+            th:action="@{/processSignup}"
+            method="post">
+
+
+            <!-- USERNAME -->
+
+            <div class="form-box">
+
+                <input
+                    class="form-input"
+                    type="text"
+                    name="username"
+                    placeholder="Enter Username"
+                    required>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-box">
+
+                <input
+                    class="form-input"
+                    type="password"
+                    name="password"
+                    placeholder="Enter Password"
+                    required>
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="form-box">
+
+                <input
+                    class="form-input"
+                    type="email"
+                    name="email"
+                    placeholder="Enter Email"
+                    required>
+
+            </div>
+
+
+            <!-- AGE -->
+
+            <div class="form-box">
+
+                <input
+                    class="form-input"
+                    type="number"
+                    name="age"
+                    placeholder="Enter Age"
+                    min="1">
+
+            </div>
+
+
+            <!-- GENDER -->
+
+            <div class="form-box">
+
+                <select
+                    class="form-input"
+                    name="gender">
+
+                    <option value="">
+                        Select Gender
+                    </option>
+
+                    <option value="Male">
+                        Male
+                    </option>
+
+                    <option value="Female">
+                        Female
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- ADDRESS -->
+
+            <div class="form-box">
+
+                <textarea
+                    class="form-input"
+                    name="address"
+                    placeholder="Enter Address"
+                    rows="5"></textarea>
+
+            </div>
+
+
+            <!-- SIGN UP BUTTON -->
+
+            <div class="form-box">
+
+                <button
+                    class="btn"
+                    type="submit">
+
+                    Sign Up
+
+                </button>
+
+            </div>
+
+
+            <!-- LOGIN LINK -->
+
+            <div class="form-box">
+
+                <p>
+
+                    Already have an account?
+
+                    <a th:href="@{/login}">
+                        Login here
+                    </a>
+
+                </p>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="footer">
+
+        <p>
+            Copyright &copy; iBlog.com
+        </p>
+
+    </div>
+
+</body>
+
+</html>
