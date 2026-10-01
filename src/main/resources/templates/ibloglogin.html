@@ -3,23 +3,19 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- ================= CSS ================= -->
+<!-- ================= CSS ================= -->
 
-    <link rel="stylesheet"
-          th:href="@{/css/utils.css}">
+<link rel="stylesheet" th:href="@{/css/utils.css}">
 
-    <link rel="stylesheet"
-          th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
 
-    <link rel="stylesheet"
-          th:href="@{/css/mobile.css}">
+<link rel="stylesheet" th:href="@{/css/mobile.css}">
 
-    <title>iBlog - Login</title>
+<title>iBlog - Login</title>
 
 </head>
 
@@ -27,158 +23,110 @@
 <body>
 
 
-    <!-- ================= NAVIGATION ================= -->
+	<!-- ================= NAVIGATION ================= -->
 
-    <nav class="navigation max-width-1 m-auto">
+	<nav class="navigation max-width-1 m-auto">
 
-        <div class="nav-left">
+		<div class="nav-left">
 
 
-            <!-- LOGO -->
+			<!-- LOGO -->
 
-            <a th:href="@{/}">
+			<a th:href="@{/}"> <span> <img th:src="@{/logo.png}"
+					width="94px" alt="iBlog">
 
-                <span>
+			</span>
 
-                    <img
-                        th:src="@{/logo.png}"
-                        width="94px"
-                        alt="iBlog">
+			</a>
 
-                </span>
 
-            </a>
+			<!-- NAVIGATION LINKS -->
 
+			<ul>
 
-            <!-- NAVIGATION LINKS -->
+				<li><a th:href="@{/}"> Home </a></li>
 
-            <ul>
+				<li><a th:href="@{/about}"> About </a></li>
 
-                <li>
+				<li><a th:href="@{/contact}"> Contact </a></li>
 
-                    <a th:href="@{/}">
-                        Home
-                    </a>
+			</ul>
 
-                </li>
+		</div>
 
-                <li>
+	</nav>
 
-                    <a th:href="@{/about}">
-                        About
-                    </a>
 
-                </li>
+	<!-- ================= DIVIDER ================= -->
 
-                <li>
+	<div class="max-width-1 m-auto">
 
-                    <a th:href="@{/contact}">
-                        Contact
-                    </a>
+		<hr>
 
-                </li>
+	</div>
 
-            </ul>
 
-        </div>
+	<!-- ================= LOGIN ================= -->
 
-    </nav>
+	<div class="contact-content font1 max-width-1 m-auto my-2">
 
+		<h2>Login to iBlog</h2>
 
-    <!-- ================= DIVIDER ================= -->
 
-    <div class="max-width-1 m-auto">
+		<!-- LOGIN FORM -->
 
-        <hr>
+		<form th:action="@{/processLogin}" method="post">
 
-    </div>
 
+			<!-- USERNAME -->
 
-    <!-- ================= LOGIN ================= -->
+			<div class="form-box">
 
-    <div class="contact-content font1 max-width-1 m-auto my-2">
+				<input class="form-input" type="text" name="username"
+					placeholder="Enter Username" required>
 
-        <h2>
-            Login to iBlog
-        </h2>
+			</div>
 
 
-        <!-- LOGIN FORM -->
+			<!-- PASSWORD -->
 
-        <form
-            th:action="@{/processLogin}"
-            method="post">
+			<div class="form-box">
 
+				<input class="form-input" type="password" name="password"
+					placeholder="Enter Password" required>
 
-            <!-- USERNAME -->
+			</div>
 
-            <div class="form-box">
 
-                <input
-                    class="form-input"
-                    type="text"
-                    name="username"
-                    placeholder="Enter Username"
-                    required>
+			<!-- LOGIN BUTTON -->
 
-            </div>
+			<div class="form-box">
 
+				<button class="btn" type="submit">Login</button>
 
-            <!-- PASSWORD -->
+			</div>
 
-            <div class="form-box">
+		</form>
 
-                <input
-                    class="form-input"
-                    type="password"
-                    name="password"
-                    placeholder="Enter Password"
-                    required>
 
-            </div>
+		<!-- SIGN UP -->
 
+		<p>
 
-            <!-- LOGIN BUTTON -->
+			Don't have an account? <a th:href="@{/signup}"> Sign Up </a>
 
-            <div class="form-box">
+		</p>
 
-                <button
-                    class="btn"
-                    type="submit">
+	</div>
 
-                    Login
 
-                </button>
+	<!-- ================= FOOTER ================= -->
 
-            </div>
+	<div class="footer">
 
-        </form>
+		<p>Copyright &copy; iBlog.com</p>
 
-
-        <!-- SIGN UP -->
-
-        <p>
-
-            Don't have an account?
-
-            <a th:href="@{/signup}">
-                Sign Up
-            </a>
-
-        </p>
-
-    </div>
-
-
-    <!-- ================= FOOTER ================= -->
-
-    <div class="footer">
-
-        <p>
-            Copyright &copy; iBlog.com
-        </p>
-
-    </div>
+	</div>
 
 
 </body>

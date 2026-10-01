@@ -3,202 +3,162 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet"
-          th:href="@{/css/utils.css}">
+<link rel="stylesheet" th:href="@{/css/utils.css}">
 
-    <link rel="stylesheet"
-          th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
 
-    <link rel="stylesheet"
-          th:href="@{/css/mobile.css}">
+<link rel="stylesheet" th:href="@{/css/mobile.css}">
 
-    <title>iBlog - Heaven for bloggers</title>
+<title>iBlog - Heaven for bloggers</title>
 
 
-    <style>
+<style>
 
-        /* =========================================
+/* =========================================
            BLOG GRID
            ========================================= */
+.blog-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 25px;
+	margin-top: 25px;
+}
 
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            margin-top: 25px;
-        }
+.blog-card {
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	overflow: hidden;
+	background: white;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
 
+.blog-card-image {
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+	display: block;
+}
 
-        .blog-card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            background: white;
-            box-shadow:
-                0 2px 8px rgba(0, 0, 0, 0.08);
-        }
+.blog-card-content {
+	padding: 20px;
+}
 
+.blog-card-content h3 {
+	margin-bottom: 10px;
+}
 
-        .blog-card-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            display: block;
-        }
+.blog-card-content h3 a {
+	text-decoration: none;
+}
 
+.blog-author {
+	font-size: 14px;
+	margin-bottom: 8px;
+}
 
-        .blog-card-content {
-            padding: 20px;
-        }
+.blog-date {
+	font-size: 13px;
+	color: #777;
+}
 
+.blog-preview {
+	margin-top: 12px;
+	line-height: 1.5;
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
 
-        .blog-card-content h3 {
-            margin-bottom: 10px;
-        }
-
-
-        .blog-card-content h3 a {
-            text-decoration: none;
-        }
-
-
-        .blog-author {
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-
-
-        .blog-date {
-            font-size: 13px;
-            color: #777;
-        }
-
-
-        .blog-preview {
-            margin-top: 12px;
-            line-height: 1.5;
-
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-
-            overflow: hidden;
-        }
-
-
-        /* =========================================
+/* =========================================
            READ MORE
            ========================================= */
+.read-more {
+	display: inline-block;
+	margin-top: 12px;
+	text-decoration: none;
+	font-weight: bold;
+}
 
-        .read-more {
-            display: inline-block;
-            margin-top: 12px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-
-        /* =========================================
+/* =========================================
            OWNER BUTTONS
            ========================================= */
+.blog-actions {
+	margin-top: 15px;
+	display: flex;
+	gap: 8px;
+}
 
-        .blog-actions {
-            margin-top: 15px;
-            display: flex;
-            gap: 8px;
-        }
+.update-btn, .delete-btn {
+	display: inline-block;
+	padding: 8px 14px;
+	border-radius: 5px;
+	color: white;
+	text-decoration: none;
+	font-size: 14px;
+}
 
+.update-btn {
+	background: #457b9d;
+}
 
-        .update-btn,
-        .delete-btn {
-            display: inline-block;
-            padding: 8px 14px;
-            border-radius: 5px;
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-        }
+.update-btn:hover {
+	background: #35657f;
+}
 
+.delete-btn {
+	background: #dc3545;
+}
 
-        .update-btn {
-            background: #457b9d;
-        }
+.delete-btn:hover {
+	background: #b02a37;
+}
 
-
-        .update-btn:hover {
-            background: #35657f;
-        }
-
-
-        .delete-btn {
-            background: #dc3545;
-        }
-
-
-        .delete-btn:hover {
-            background: #b02a37;
-        }
-
-
-        /* =========================================
+/* =========================================
            USER NAVIGATION
            ========================================= */
+.user-nav {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
 
-        .user-nav {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+.user-nav a {
+	text-decoration: none;
+}
 
+.welcome-user {
+	font-size: 14px;
+}
 
-        .user-nav a {
-            text-decoration: none;
-        }
+.logout-link {
+	color: #dc3545;
+	font-weight: bold;
+}
 
+.messages-link {
+	font-weight: bold;
+}
 
-        .welcome-user {
-            font-size: 14px;
-        }
-
-
-        .logout-link {
-            color: #dc3545;
-            font-weight: bold;
-        }
-
-
-        .messages-link {
-            font-weight: bold;
-        }
-
-
-        /* =========================================
+/* =========================================
            RESPONSIVE
            ========================================= */
+@media screen and (max-width: 900px) {
+	.blog-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
 
-        @media screen and (max-width: 900px) {
-
-            .blog-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-        }
-
-
-        @media screen and (max-width: 600px) {
-
-            .blog-grid {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-    </style>
+@media screen and (max-width: 600px) {
+	.blog-grid {
+		grid-template-columns: 1fr;
+	}
+}
+</style>
 
 </head>
 
@@ -206,365 +166,252 @@
 <body>
 
 
-    <!-- ================= NAVIGATION ================= -->
+	<!-- ================= NAVIGATION ================= -->
 
-    <nav class="navigation max-width-1 m-auto">
+	<nav class="navigation max-width-1 m-auto">
 
-        <div class="nav-left">
+		<div class="nav-left">
 
-            <!-- LOGO -->
+			<!-- LOGO -->
 
-            <a th:href="@{/}">
+			<a th:href="@{/}"> <span> <img th:src="@{/logo.png}"
+					width="94px" alt="iBlog">
 
-                <span>
+			</span>
 
-                    <img
-                        th:src="@{/logo.png}"
-                        width="94px"
-                        alt="iBlog">
+			</a>
 
-                </span>
 
-            </a>
+			<!-- NAVIGATION LINKS -->
 
+			<ul>
 
-            <!-- NAVIGATION LINKS -->
+				<li><a th:href="@{/}"> Home </a></li>
 
-            <ul>
+				<li><a th:href="@{/about}"> About </a></li>
 
-                <li>
-                    <a th:href="@{/}">
-                        Home
-                    </a>
-                </li>
+				<li><a th:href="@{/contact}"> Contact </a></li>
 
-                <li>
-                    <a th:href="@{/about}">
-                        About
-                    </a>
-                </li>
+				<li><a th:href="@{/addBlog}"> Add Blog </a></li>
 
-                <li>
-                    <a th:href="@{/contact}">
-                        Contact
-                    </a>
-                </li>
+			</ul>
 
-                <li>
-                    <a th:href="@{/addBlog}">
-                        Add Blog
-                    </a>
-                </li>
+		</div>
 
-            </ul>
 
-        </div>
+		<!-- ================= SEARCH ================= -->
 
+		<div class="nav-search">
 
-        <!-- ================= SEARCH ================= -->
+			<form th:action="@{/search}" method="get">
 
-        <div class="nav-search">
+				<input class="form-input" type="text" name="query"
+					placeholder="Article Search" required>
 
-            <form
-                th:action="@{/search}"
-                method="get">
+				<button class="btn" type="submit">Search</button>
 
-                <input
-                    class="form-input"
-                    type="text"
-                    name="query"
-                    placeholder="Article Search"
-                    required>
+			</form>
 
-                <button
-                    class="btn"
-                    type="submit">
+		</div>
 
-                    Search
 
-                </button>
+		<!-- ================= LOGIN / USER ================= -->
 
-            </form>
+		<div class="nav-login">
 
-        </div>
+			<div th:if="${session.loggedInUser != null}" class="user-nav">
 
+				<span class="welcome-user"> Hi, <span
+					th:text="${session.loggedInUser.username}"> </span>
 
-        <!-- ================= LOGIN / USER ================= -->
+				</span> <a th:href="@{/myMessages}" class="messages-link"> My Messages
 
-        <div class="nav-login">
+				</a> <a th:href="@{/logout}" class="logout-link"> Logout </a>
 
-            <div
-                th:if="${session.loggedInUser != null}"
-                class="user-nav">
+			</div>
 
-                <span class="welcome-user">
 
-                    Hi,
+			<a th:unless="${session.loggedInUser != null}" th:href="@{/login}"
+				class="login-link"> Sign In </a>
 
-                    <span
-                        th:text="${session.loggedInUser.username}">
-                    </span>
+		</div>
 
-                </span>
+	</nav>
 
 
-                <a
-                    th:href="@{/myMessages}"
-                    class="messages-link">
+	<!-- ================= DIVIDER ================= -->
 
-                    My Messages
+	<div class="max-width-1 m-auto">
 
-                </a>
+		<hr>
 
+	</div>
 
-                <a
-                    th:href="@{/logout}"
-                    class="logout-link">
 
-                    Logout
+	<!-- ================= HOME CONTENT ================= -->
 
-                </a>
+	<div class="m-auto content max-width-1 my-2">
 
-            </div>
+		<div class="content-left">
 
+			<h1>The heaven for bloggers</h1>
 
-            <a
-                th:unless="${session.loggedInUser != null}"
-                th:href="@{/login}"
-                class="login-link">
 
-                Sign In
+			<p>iBlog is a website which lets you submit an article and share
+				your thoughts with other readers.</p>
 
-            </a>
 
-        </div>
+			<p>Read interesting articles, share your knowledge and discover
+				new ideas from other bloggers.</p>
 
-    </nav>
+		</div>
 
 
-    <!-- ================= DIVIDER ================= -->
+		<div class="content-right">
 
-    <div class="max-width-1 m-auto">
+			<img th:src="@{/home.svg}" alt="iBlog">
 
-        <hr>
+		</div>
 
-    </div>
+	</div>
 
 
-    <!-- ================= HOME CONTENT ================= -->
+	<!-- ================= DIVIDER ================= -->
 
-    <div class="m-auto content max-width-1 my-2">
+	<div class="max-width-1 m-auto">
 
-        <div class="content-left">
+		<hr>
 
-            <h1>
-                The heaven for bloggers
-            </h1>
+	</div>
 
 
-            <p>
+	<!-- ================= BLOGS ================= -->
 
-                iBlog is a website which lets you
-                submit an article and share your
-                thoughts with other readers.
+	<div class="home-articles max-width-1 m-auto font2">
 
-            </p>
+		<h2>Featured Articles</h2>
 
 
-            <p>
+		<!-- NO BLOGS -->
 
-                Read interesting articles, share your
-                knowledge and discover new ideas
-                from other bloggers.
+		<p th:if="${posts == null or #lists.isEmpty(posts)}">No blogs
+			available yet.</p>
 
-            </p>
 
-        </div>
+		<!-- BLOG GRID -->
 
+		<div class="blog-grid">
 
-        <div class="content-right">
+			<div th:each="post : ${posts}" class="blog-card">
 
-            <img
-                th:src="@{/home.svg}"
-                alt="iBlog">
 
-        </div>
+				<!-- ================= IMAGE ================= -->
 
-    </div>
+				<!-- UPLOADED BLOG IMAGE -->
 
+				<img
+					th:if="${post.imageName != null and !#strings.isEmpty(post.imageName)}"
+					class="blog-card-image"
+					th:src="@{/img/blogs/{image}(image=${post.imageName})}"
+					th:alt="${post.title}">
 
-    <!-- ================= DIVIDER ================= -->
 
-    <div class="max-width-1 m-auto">
+				<!-- DEFAULT IMAGE -->
 
-        <hr>
+				<img
+					th:unless="${post.imageName != null and !#strings.isEmpty(post.imageName)}"
+					class="blog-card-image" th:src="@{/3.png}" alt="iBlog">
 
-    </div>
 
+				<!-- ================= CONTENT ================= -->
 
-    <!-- ================= BLOGS ================= -->
+				<div class="blog-card-content">
 
-    <div class="home-articles max-width-1 m-auto font2">
 
-        <h2>
-            Featured Articles
-        </h2>
+					<!-- BLOG TITLE -->
 
+					<h3>
 
-        <!-- NO BLOGS -->
+						<a th:href="@{/blogpost/{id}(id=${post.id})}"
+							th:text="${post.title}"> Blog Title </a>
 
-        <p th:if="${posts == null or #lists.isEmpty(posts)}">
+					</h3>
 
-            No blogs available yet.
 
-        </p>
+					<!-- AUTHOR -->
 
+					<div class="blog-author">
 
-        <!-- BLOG GRID -->
+						By <span th:text="${post.author}"> </span>
 
-        <div class="blog-grid">
+					</div>
 
-            <div
-                th:each="post : ${posts}"
-                class="blog-card">
 
+					<!-- DATE -->
 
-                <!-- ================= IMAGE ================= -->
+					<div class="blog-date">
 
-                <!-- UPLOADED BLOG IMAGE -->
+						<span th:text="${post.createdAt}"> </span>
 
-                <img
-                    th:if="${post.imageName != null and !#strings.isEmpty(post.imageName)}"
-                    class="blog-card-image"
-                    th:src="@{/img/blogs/{image}(image=${post.imageName})}"
-                    th:alt="${post.title}">
+					</div>
 
 
-                <!-- DEFAULT IMAGE -->
+					<!-- BLOG PREVIEW -->
 
-                <img
-                    th:unless="${post.imageName != null and !#strings.isEmpty(post.imageName)}"
-                    class="blog-card-image"
-                    th:src="@{/3.png}"
-                    alt="iBlog">
+					<div class="blog-preview">
 
+						<span th:text="${post.content}"> </span>
 
-                <!-- ================= CONTENT ================= -->
+					</div>
 
-                <div class="blog-card-content">
 
+					<!-- READ MORE -->
 
-                    <!-- BLOG TITLE -->
+					<a class="read-more" th:href="@{/blogpost/{id}(id=${post.id})}">
 
-                    <h3>
+						Read Full Blog → </a>
 
-                        <a
-                            th:href="@{/blogpost/{id}(id=${post.id})}"
-                            th:text="${post.title}">
 
-                            Blog Title
+					<!-- ================= OWNER ACTIONS ================= -->
 
-                        </a>
+					<div
+						th:if="${session.loggedInUser != null and session.loggedInUser.username == post.author}"
+						class="blog-actions">
 
-                    </h3>
 
+						<!-- UPDATE -->
 
-                    <!-- AUTHOR -->
+						<a class="update-btn" th:href="@{/updateBlog/{id}(id=${post.id})}">
 
-                    <div class="blog-author">
+							Update </a>
 
-                        By
 
-                        <span
-                            th:text="${post.author}">
-                        </span>
+						<!-- DELETE -->
 
-                    </div>
+						<a class="delete-btn" th:href="@{/deleteBlog/{id}(id=${post.id})}"
+							onclick="return confirm('Are you sure you want to delete this post?');">
 
+							Delete </a>
 
-                    <!-- DATE -->
+					</div>
 
-                    <div class="blog-date">
 
-                        <span
-                            th:text="${post.createdAt}">
-                        </span>
+				</div>
 
-                    </div>
+			</div>
 
+		</div>
 
-                    <!-- BLOG PREVIEW -->
+	</div>
 
-                    <div class="blog-preview">
 
-                        <span
-                            th:text="${post.content}">
-                        </span>
+	<!-- ================= FOOTER ================= -->
 
-                    </div>
+	<div class="footer">
 
+		<p>Copyright &copy; iBlog.com</p>
 
-                    <!-- READ MORE -->
-
-                    <a
-                        class="read-more"
-                        th:href="@{/blogpost/{id}(id=${post.id})}">
-
-                        Read Full Blog →
-
-                    </a>
-
-
-                    <!-- ================= OWNER ACTIONS ================= -->
-
-                    <div
-                        th:if="${session.loggedInUser != null and session.loggedInUser.username == post.author}"
-                        class="blog-actions">
-
-
-                        <!-- UPDATE -->
-
-                        <a
-                            class="update-btn"
-                            th:href="@{/updateBlog/{id}(id=${post.id})}">
-
-                            Update
-
-                        </a>
-
-
-                        <!-- DELETE -->
-
-                        <a
-                            class="delete-btn"
-                            th:href="@{/deleteBlog/{id}(id=${post.id})}"
-                            onclick="return confirm('Are you sure you want to delete this post?');">
-
-                            Delete
-
-                        </a>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- ================= FOOTER ================= -->
-
-    <div class="footer">
-
-        <p>
-            Copyright &copy; iBlog.com
-        </p>
-
-    </div>
+	</div>
 
 
 </body>

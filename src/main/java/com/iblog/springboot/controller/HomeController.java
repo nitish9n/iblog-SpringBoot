@@ -10,37 +10,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.iblog.springboot.entity.Post;
 import com.iblog.springboot.service.PostService;
 
-
 @Controller
 public class HomeController {
 
-    @Autowired
-    private PostService postService;
+	@Autowired
+	private PostService postService;
 
+	// ================= HOME =================
 
-    // ================= HOME =================
+	@GetMapping("/")
+	public String home(Model model) {
 
-    @GetMapping("/")
-    public String home(Model model) {
+		// Show only blogs approved by admin
+		List<Post> posts = postService.getApprovedPosts();
 
-        // Show only blogs approved by admin
-        List<Post> posts =
-                postService.getApprovedPosts();
+		model.addAttribute("posts", posts);
 
-        model.addAttribute(
-                "posts",
-                posts);
+		return "iblog";
+	}
 
-        return "iblog";
-    }
+	// ================= ABOUT =================
 
+	@GetMapping("/about")
+	public String about() {
 
-    // ================= ABOUT =================
-
-    @GetMapping("/about")
-    public String about() {
-
-        return "iblogabout";
-    }
+		return "iblogabout";
+	}
 
 }

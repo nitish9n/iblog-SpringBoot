@@ -3,248 +3,181 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- ================= CSS ================= -->
+<!-- ================= CSS ================= -->
 
-    <link rel="stylesheet"
-          th:href="@{/css/utils.css}">
+<link rel="stylesheet" th:href="@{/css/utils.css}">
 
-    <link rel="stylesheet"
-          th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
 
-    <link rel="stylesheet"
-          th:href="@{/css/mobile.css}">
+<link rel="stylesheet" th:href="@{/css/mobile.css}">
 
-    <title>iBlog - Sign Up</title>
+<title>iBlog - Sign Up</title>
 
 </head>
 
 
 <body>
 
-    <!-- ================= NAVIGATION ================= -->
+	<!-- ================= NAVIGATION ================= -->
 
-    <nav class="navigation max-width-1 m-auto">
+	<nav class="navigation max-width-1 m-auto">
 
-        <div class="nav-left">
+		<div class="nav-left">
 
-            <!-- LOGO -->
+			<!-- LOGO -->
 
-            <a th:href="@{/}">
+			<a th:href="@{/}"> <span> <img th:src="@{/logo.png}"
+					width="94px" alt="iBlog">
 
-                <span>
+			</span>
 
-                    <img
-                        th:src="@{/logo.png}"
-                        width="94px"
-                        alt="iBlog">
+			</a>
 
-                </span>
 
-            </a>
+			<!-- NAVIGATION LINKS -->
 
+			<ul>
 
-            <!-- NAVIGATION LINKS -->
+				<li><a th:href="@{/}"> Home </a></li>
 
-            <ul>
+				<li><a th:href="@{/about}"> About </a></li>
 
-                <li>
-                    <a th:href="@{/}">
-                        Home
-                    </a>
-                </li>
+				<li><a th:href="@{/contact}"> Contact </a></li>
 
-                <li>
-                    <a th:href="@{/about}">
-                        About
-                    </a>
-                </li>
+			</ul>
 
-                <li>
-                    <a th:href="@{/contact}">
-                        Contact
-                    </a>
-                </li>
+		</div>
 
-            </ul>
+	</nav>
 
-        </div>
 
-    </nav>
+	<!-- ================= DIVIDER ================= -->
 
+	<div class="max-width-1 m-auto">
 
-    <!-- ================= DIVIDER ================= -->
+		<hr>
 
-    <div class="max-width-1 m-auto">
+	</div>
 
-        <hr>
 
-    </div>
+	<!-- ================= SIGN UP ================= -->
 
+	<div class="contact-content font1 max-width-1 m-auto my-2">
 
-    <!-- ================= SIGN UP ================= -->
+		<h2>Create Your iBlog Account</h2>
 
-    <div class="contact-content font1 max-width-1 m-auto my-2">
 
-        <h2>
-            Create Your iBlog Account
-        </h2>
+		<!-- SIGNUP FORM -->
 
+		<form th:action="@{/processSignup}" method="post">
 
-        <!-- SIGNUP FORM -->
 
-        <form
-            th:action="@{/processSignup}"
-            method="post">
+			<!-- USERNAME -->
 
+			<div class="form-box">
 
-            <!-- USERNAME -->
+				<input class="form-input" type="text" name="username"
+					placeholder="Enter Username" required>
 
-            <div class="form-box">
+			</div>
 
-                <input
-                    class="form-input"
-                    type="text"
-                    name="username"
-                    placeholder="Enter Username"
-                    required>
 
-            </div>
+			<!-- PASSWORD -->
 
+			<div class="form-box">
 
-            <!-- PASSWORD -->
+				<input class="form-input" type="password" name="password"
+					placeholder="Enter Password" required>
 
-            <div class="form-box">
+			</div>
 
-                <input
-                    class="form-input"
-                    type="password"
-                    name="password"
-                    placeholder="Enter Password"
-                    required>
 
-            </div>
+			<!-- EMAIL -->
 
+			<div class="form-box">
 
-            <!-- EMAIL -->
+				<input class="form-input" type="email" name="email"
+					placeholder="Enter Email" required>
 
-            <div class="form-box">
+			</div>
 
-                <input
-                    class="form-input"
-                    type="email"
-                    name="email"
-                    placeholder="Enter Email"
-                    required>
 
-            </div>
+			<!-- AGE -->
 
+			<div class="form-box">
 
-            <!-- AGE -->
+				<input class="form-input" type="number" name="age"
+					placeholder="Enter Age" min="1">
 
-            <div class="form-box">
+			</div>
 
-                <input
-                    class="form-input"
-                    type="number"
-                    name="age"
-                    placeholder="Enter Age"
-                    min="1">
 
-            </div>
+			<!-- GENDER -->
 
+			<div class="form-box">
 
-            <!-- GENDER -->
+				<select class="form-input" name="gender">
 
-            <div class="form-box">
+					<option value="">Select Gender</option>
 
-                <select
-                    class="form-input"
-                    name="gender">
+					<option value="Male">Male</option>
 
-                    <option value="">
-                        Select Gender
-                    </option>
+					<option value="Female">Female</option>
 
-                    <option value="Male">
-                        Male
-                    </option>
+					<option value="Other">Other</option>
 
-                    <option value="Female">
-                        Female
-                    </option>
+				</select>
 
-                    <option value="Other">
-                        Other
-                    </option>
+			</div>
 
-                </select>
 
-            </div>
+			<!-- ADDRESS -->
 
+			<div class="form-box">
 
-            <!-- ADDRESS -->
+				<textarea class="form-input" name="address"
+					placeholder="Enter Address" rows="5"></textarea>
 
-            <div class="form-box">
+			</div>
 
-                <textarea
-                    class="form-input"
-                    name="address"
-                    placeholder="Enter Address"
-                    rows="5"></textarea>
 
-            </div>
+			<!-- SIGN UP BUTTON -->
 
+			<div class="form-box">
 
-            <!-- SIGN UP BUTTON -->
+				<button class="btn" type="submit">Sign Up</button>
 
-            <div class="form-box">
+			</div>
 
-                <button
-                    class="btn"
-                    type="submit">
 
-                    Sign Up
+			<!-- LOGIN LINK -->
 
-                </button>
+			<div class="form-box">
 
-            </div>
+				<p>
 
+					Already have an account? <a th:href="@{/login}"> Login here </a>
 
-            <!-- LOGIN LINK -->
+				</p>
 
-            <div class="form-box">
+			</div>
 
-                <p>
+		</form>
 
-                    Already have an account?
+	</div>
 
-                    <a th:href="@{/login}">
-                        Login here
-                    </a>
 
-                </p>
+	<!-- ================= FOOTER ================= -->
 
-            </div>
+	<div class="footer">
 
-        </form>
+		<p>Copyright &copy; iBlog.com</p>
 
-    </div>
-
-
-    <!-- ================= FOOTER ================= -->
-
-    <div class="footer">
-
-        <p>
-            Copyright &copy; iBlog.com
-        </p>
-
-    </div>
+	</div>
 
 </body>
 

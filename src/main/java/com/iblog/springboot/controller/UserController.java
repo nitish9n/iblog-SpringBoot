@@ -21,143 +21,109 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class UserController {
 
-    @Autowired
-    private UserService userservice;
+	@Autowired
+	private UserService userservice;
 
+	// ================= REST USER ENDPOINTS =================
 
-    // ================= REST USER ENDPOINTS =================
+	@ResponseBody
+	@PostMapping("/addUser")
+	public User addUser(@RequestBody User user) {
 
-    @ResponseBody
-    @PostMapping("/addUser")
-    public User addUser(@RequestBody User user) {
+		userservice.addUser(user);
 
-        userservice.addUser(user);
+		return user;
+	}
 
-        return user;
-    }
+	@ResponseBody
+	@GetMapping("/getUser/{id}")
+	public User getUser(@PathVariable(name = "id") int id) {
 
+		return userservice.validateUser(id);
+	}
 
-    @ResponseBody
-    @GetMapping("/getUser/{id}")
-    public User getUser(
-            @PathVariable(name = "id") int id) {
+	@ResponseBody
+	@GetMapping("/getAllUser")
+	public List<User> getAllUser() {
 
-        return userservice.validateUser(id);
-    }
+		return userservice.getAllUsers();
+	}
 
+	// ================= SIGNUP =================
 
-    @ResponseBody
-    @GetMapping("/getAllUser")
-    public List<User> getAllUser() {
+	@GetMapping("/signup")
+	public String showSignup(HttpSession session) {
 
-        return userservice.getAllUsers();
-    }
+		User loggedInUser = (User) session.getAttribute("loggedInUser");
 
+		// Already logged in
+		if (loggedInUser != null) {
 
-    // ================= SIGNUP =================
+			return "redirect:/";
+		}
 
-    @GetMapping("/signup")
-    public String showSignup(
-            HttpSession session) {
+		return "iblogsignup";
+	}
 
-        User loggedInUser =
-                (User) session.getAttribute(
-                        "loggedInUser");
+	@PostMapping("/processSignup")
+	public String processSignup(@ModelAttribute("user") User user) {
 
-        // Already logged in
-        if (loggedInUser != null) {
+		userservice.addUser(user);
 
-            return "redirect:/";
-        }
+		System.out.println("New User Registered: " + user);
 
-        return "iblogsignup";
-    }
+		return "redirect:/login";
+	}
 
+	// ================= LOGIN =================
 
-    @PostMapping("/processSignup")
-    public String processSignup(
-            @ModelAttribute("user") User user) {
+	@GetMapping("/login")
+	public String showLogin(HttpSession session) {
 
-        userservice.addUser(user);
+		User loggedInUser = (User) session.getAttribute("loggedInUser");
 
-        System.out.println(
-                "New User Registered: " + user);
+		// Already logged in
+		if (loggedInUser != null) {
 
-        return "redirect:/login";
-    }
+			return "redirect:/";
+		}
 
+		return "ibloglogin";
+	}
 
-    // ================= LOGIN =================
+	@PostMapping("/processLogin")
+	public String processLogin(@RequestParam("username") String username, @RequestParam("password") String password,
+			Model model, HttpSession session) {
 
-    @GetMapping("/login")
-    public String showLogin(
-            HttpSession session) {
+		User user = userservice.loginUser(username, password);
 
-        User loggedInUser =
-                (User) session.getAttribute(
-                        "loggedInUser");
+		if (user != null) {
 
-        // Already logged in
-        if (loggedInUser != null) {
+			// Store logged-in user in session
+			session.setAttribute("loggedInUser", user);
 
-            return "redirect:/";
-        }
+			System.out.println("Login successful: " + user.getUsername());
 
-        return "ibloglogin";
-    }
+			return "redirect:/";
+		}
 
+		model.addAttribute("error", "Invalid username or password");
 
-    @PostMapping("/processLogin")
-    public String processLogin(
-            @RequestParam("username") String username,
-            @RequestParam("password") String password,
-            Model model,
-            HttpSession session) {
+		return "ibloglogin";
+	}
 
-        User user =
-                userservice.loginUser(
-                        username,
-                        password);
+	// ================= LOGOUT =================
 
-        if (user != null) {
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
 
-            // Store logged-in user in session
-            session.setAttribute(
-                    "loggedInUser",
-                    user);
+		/*
+		 * Destroy the complete session.
+		 *
+		 * This removes: loggedInUser old session data any other user-specific data
+		 */
+		session.invalidate();
 
-            System.out.println(
-                    "Login successful: "
-                    + user.getUsername());
-
-            return "redirect:/";
-        }
-
-
-        model.addAttribute(
-                "error",
-                "Invalid username or password");
-
-        return "ibloglogin";
-    }
-
-
-    // ================= LOGOUT =================
-
-    @GetMapping("/logout")
-    public String logout(
-            HttpSession session) {
-
-        /*
-         * Destroy the complete session.
-         *
-         * This removes:
-         * loggedInUser
-         * old session data
-         * any other user-specific data
-         */
-        session.invalidate();
-
-        return "redirect:/";
-    }
+		return "redirect:/";
+	}
 }
